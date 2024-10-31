@@ -28,7 +28,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <DynamicContextProvider
           settings={{
-            environmentId: process.env.NEXT_PUBLIC_DYNAMIC_ID,
+            environmentId: process.env.NEXT_PUBLIC_DYNAMIC_ID!,
             walletConnectors: [EthereumWalletConnectors],
             social: { strategy: 'popup' },
             shadowDOMEnabled: false,
