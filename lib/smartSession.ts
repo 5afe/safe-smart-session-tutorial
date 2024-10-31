@@ -94,7 +94,6 @@ export const sessionKeyTransaction = async (safe: SafeSmartAccountClient, permis
     key: BigInt(pad(SESSION_CONFIG.smartSessionAddress, { dir: 'right', size: 24 })),
     signUserOpHash: async (userOpHash) => {
       const signer = sessionAccount;
-      console.log(signer.address)
       const signature = await signer.signMessage({ message: { raw: userOpHash } });
       return encodeSmartSessionSignature({ mode: SmartSessionMode.USE, permissionId, signature });
     },

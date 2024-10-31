@@ -82,7 +82,6 @@ const TransactionBuilder: React.FC<TransactionBuilderProps> = ({ safe, updateTra
 
         try {
             // Encode the parameters based on the function's inputs
-            console.log(selectedFunction)
             const callData = encodeFunctionData({
                 abi: contractABI,
                 functionName: selectedFunction?.name,
@@ -95,7 +94,6 @@ const TransactionBuilder: React.FC<TransactionBuilderProps> = ({ safe, updateTra
             updateTransactionHistory(txHash, true)
         } catch (error) {
             setError(true)
-            console.log(error)
         } finally {
             setLoading(false)
         }
