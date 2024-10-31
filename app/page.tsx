@@ -12,7 +12,6 @@ import SessionKeyForm from '@/components/SessionKeyForm'
 import { useDynamicContext, useIsLoggedIn } from '@dynamic-labs/sdk-react-core'
 import { isEthereumWallet } from '@dynamic-labs/ethereum'
 import { Client, Hex, erc20Abi, formatEther } from 'viem'
-import { usdtAddress } from '@/lib/smartSession'
 
 
 
@@ -20,7 +19,6 @@ export default function Home() {
   const [safe, setSafe] = useState<SafeSmartAccountClient | undefined>()
   const [provider, setProvider] = useState<Client | null>()
   const [balance, setBalance] = useState('0')
-  const [balanceERC20, setBalanceERC20] = useState('0')
   const [nonce, setNonce] = useState(0n)
   const { primaryWallet } = useDynamicContext()
   const isLoggedIn = useIsLoggedIn()
@@ -55,13 +53,6 @@ export default function Home() {
         onBlock: async () => {
           const balance = await publicClient.getBalance({ address: safe.account.address as Hex })
           setBalance(formatEther(balance))
-          const erc20Balance = await publicClient.readContract({
-            address: usdtAddress,
-            abi: erc20Abi,
-            functionName: 'balanceOf',
-            args: [safe.account.address]
-          })
-          setBalanceERC20(formatEther(erc20Balance))
         }
       }
     )
@@ -95,9 +86,6 @@ export default function Home() {
         <>
           <div>
             Current balance: {balance} ETH
-          </div>
-          <div>
-            Current balance: {balanceERC20} USD
           </div>
           <div>
             Safe nonce {nonce.toString()}

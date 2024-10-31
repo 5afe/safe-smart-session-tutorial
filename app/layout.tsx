@@ -24,16 +24,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <DynamicContextProvider
-        settings={{
-          environmentId: '336e4f47-b1d1-44f3-bea0-129795426bfd',
-          walletConnectors: [EthereumWalletConnectors],
-          social: {strategy: 'popup'},
-          shadowDOMEnabled: false,
-          // Add other configuration options as needed
-        }}
-      >
-        <body className={inter.className}>
+
+      <body className={inter.className}>
+        <DynamicContextProvider
+          settings={{
+            environmentId: '336e4f47-b1d1-44f3-bea0-129795426bfd',
+            walletConnectors: [EthereumWalletConnectors],
+            social: { strategy: 'popup' },
+            shadowDOMEnabled: false,
+            // Add other configuration options as needed
+          }}
+        >
           <nav
             style={{
               display: 'flex',
@@ -45,7 +46,7 @@ export default function RootLayout({
               <Safe width={95} height={36} />
             </a>
             <div style={{ display: 'flex' }}>
-            <DynamicWidget />
+              <DynamicWidget />
             </div>
           </nav>
           <div style={{ width: '100%', textAlign: 'center' }}>
@@ -57,7 +58,7 @@ export default function RootLayout({
           </div>
           <div
             style={{
-              width: '90%', 
+              width: '90%',
               maxWidth: '1200px',
               margin: '0 auto',
               display: 'flex',
@@ -69,8 +70,9 @@ export default function RootLayout({
           >
             {children}
           </div>
-        </body>
-      </DynamicContextProvider>
+        </DynamicContextProvider>
+
+      </body>
     </html>
   )
 }
