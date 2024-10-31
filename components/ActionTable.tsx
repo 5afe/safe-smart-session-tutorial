@@ -22,21 +22,19 @@ const ActionTable: React.FC<ActionTableProps> = ({ actions: actionsData, onActio
     field: 'actionTarget' | 'actionTargetSelector',
     value: Address | Hex
   ) => {
-    console.log(value)
     const updatedActions = [...actionsData];
     updatedActions[index][field] = value;
     onActionsChange(updatedActions); // Call parent function to update state
   };
 
   const addAction = () => {
-    const updatedActions = [...actionsData, { actionTarget: '0x' as Address, actionTargetSelector: '0x' as Hex, actionPolicies: sudoPolicies }];
+    const updatedActions = [...actionsData, { actionTarget: '0x' as Address, actionTargetSelector: '0x00000000' as Hex, actionPolicies: sudoPolicies }];
     onActionsChange(updatedActions); // Update parent state
   };
 
   const removeAction = (index: number) => {
     const updatedActions = actionsData.filter((_, i) => i !== index);
     onActionsChange(updatedActions); // Update parent state
-    console.log("table", actionsData)
   };
 
   const toggleTableVisibility = () => {
