@@ -80,22 +80,3 @@ export const getSmartAccountClient = async (signer: any, nonceKey?: bigint) => {
 
   return {safe: smartAccountClient as unknown as SafeSmartAccountClient, nonce}
 }
-
-export function encodeMultiSendData(txs: MetaTransactionData[]): string {
-  return `0x${txs.map((tx) => encodeMetaTransaction(tx)).join('')}`
-}
-
-function encodeMetaTransaction(tx: MetaTransactionData): string {
-  const data = toBytes(tx.data)
-  const encoded = encodePacked(
-    ['uint8', 'address', 'uint256', 'uint256', 'bytes'],
-    [
-      tx.operation ?? OperationType.Call,
-      tx.to as Hex,
-      BigInt(tx.value),
-      BigInt(data.length),
-      bytesToHex(data)
-    ]
-  )
-  return encoded.slice(2)
-}
