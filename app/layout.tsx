@@ -1,8 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 
-import ExternalLink from '../public/external-link.svg'
-import Github from '../public/github.svg'
 import Safe from '../public/safe.svg'
 import './globals.css'
 
@@ -30,7 +28,8 @@ export default function RootLayout({
         settings={{
           environmentId: '336e4f47-b1d1-44f3-bea0-129795426bfd',
           walletConnectors: [EthereumWalletConnectors],
-          social: {strategy: 'popup'}
+          social: {strategy: 'popup'},
+          shadowDOMEnabled: false,
           // Add other configuration options as needed
         }}
       >
@@ -58,14 +57,14 @@ export default function RootLayout({
           </div>
           <div
             style={{
-              width: '90%',  // Increased width to 90% of the viewport
-              maxWidth: '1200px', // Added a max-width to ensure it doesn't stretch too wide
-              margin: '0 auto', // Center the content by auto margins
+              width: '90%', 
+              maxWidth: '1200px',
+              margin: '0 auto',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               flexDirection: 'column',
-              padding: '20px' // Optional padding for better spacing
+              padding: '20px'
             }}
           >
             {children}
