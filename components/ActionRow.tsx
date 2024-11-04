@@ -1,4 +1,4 @@
-import { AbiFunction, Address, Hex, parseAbi, toFunctionSelector } from 'viem';
+import { AbiFunction, Address, Hex, toFunctionSelector } from 'viem';
 import React, { useEffect, useState } from 'react';
 import { ActionData } from '@rhinestone/module-sdk';
 import { debounce } from 'lodash'; // Optional: Use debounce to improve input handling

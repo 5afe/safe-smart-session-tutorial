@@ -9,10 +9,8 @@ import TransactionBuilder from './TransactionBuilder'
 const SessionKeyForm: React.FC<{ safe: SafeSmartAccountClient }> = ({
   safe
 }) => {
-  const [txHash, setTxHash] = useState('' as `0x${string}`)
   const [loading, setLoading] = useState(false)
   const [session, setSession] = useState<Session>(generateSession())
-  const [error, setError] = useState(false)
   const [is7579Installed, setIs7579Installed] = useState(false)
 
   const [transactions, setTransactions] = useState<
@@ -67,10 +65,8 @@ const SessionKeyForm: React.FC<{ safe: SafeSmartAccountClient }> = ({
             style={styles.button}
             onClick={async () => {
               setLoading(true);
-              setError(false);
               installSessionModule(safe, session)
                 .then(txHash => {
-                  setTxHash(txHash);
                   updateTransactionHistory(txHash, true)
                   setLoading(false);
                   setIs7579Installed(true);
@@ -78,7 +74,6 @@ const SessionKeyForm: React.FC<{ safe: SafeSmartAccountClient }> = ({
                 .catch(err => {
                   console.error(err);
                   setLoading(false);
-                  setError(true);
                 });
             }}
           >
@@ -90,17 +85,14 @@ const SessionKeyForm: React.FC<{ safe: SafeSmartAccountClient }> = ({
           disabled={loading || !is7579Installed || !session}
           onClick={async () => {
             setLoading(true);
-            setError(false);
             updateSession(safe, session)
               .then(txHash => {
-                setTxHash(txHash);
                 updateTransactionHistory(txHash, true)
                 setLoading(false);
               })
               .catch(err => {
                 console.error(err);
                 setLoading(false);
-                setError(true);
               });
           }}
         >

@@ -9,6 +9,8 @@ const nextConfig = {
     const fileLoaderRule = config.module.rules.find(rule =>
       rule.test?.test?.('.svg')
     )
+    config.resolve.fallback = { fs: false, net: false, tls: false };
+    config.externals.push('pino-pretty', 'encoding');
 
     config.module.rules.push(
       // Reapply the existing rule, but only for svg imports ending in ?url

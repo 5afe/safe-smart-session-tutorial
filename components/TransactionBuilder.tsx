@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { SafeSmartAccountClient } from '@/lib/permissionless'
-import { Hex, toFunctionSelector, AbiFunction, encodeAbiParameters, encodeFunctionData, Address } from 'viem'
+import { Hex, AbiFunction, encodeFunctionData, Address } from 'viem'
 import { debounce } from 'lodash'
 import { sessionKeyTransaction } from '@/lib/smartSession'
 import { Session, getPermissionId } from '@rhinestone/module-sdk'

@@ -1,4 +1,4 @@
-import { Account, Address, Hex, http, pad } from 'viem'
+import { Account, Address, Hex, http } from 'viem'
 import { sepolia } from 'viem/chains'
 import { entryPoint07Address, getUserOperationHash } from 'viem/account-abstraction'
 import { pimlicoClient, pimlicoUrl, publicClient } from './permissionless'
