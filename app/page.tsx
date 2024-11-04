@@ -11,7 +11,7 @@ import {
 import SessionKeyForm from '@/components/SessionKeyForm'
 import { useDynamicContext, useIsLoggedIn } from '@dynamic-labs/sdk-react-core'
 import { isEthereumWallet } from '@dynamic-labs/ethereum'
-import { Client, Hex, erc20Abi, formatEther } from 'viem'
+import { Client, Hex, formatEther } from 'viem'
 
 
 

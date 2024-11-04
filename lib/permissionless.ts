@@ -1,15 +1,13 @@
-import { Chain, Hex, HttpTransport, bytesToBigInt, bytesToHex, createPublicClient, createWalletClient, custom, encodePacked, http, toBytes } from 'viem'
-import { generatePrivateKey, } from 'viem/accounts'
+import { Chain, HttpTransport, bytesToBigInt, createPublicClient, http } from 'viem'
 import { SmartAccountClient, createSmartAccountClient } from "permissionless"
 import { sepolia } from 'viem/chains'
 import { Erc7579Actions, erc7579Actions } from 'permissionless/actions/erc7579'
-import { ToSafeSmartAccountReturnType, toSafeSmartAccount, toSimpleSmartAccount } from "permissionless/accounts"
+import { ToSafeSmartAccountReturnType, toSafeSmartAccount } from "permissionless/accounts"
 import {
   createPimlicoClient,
 } from 'permissionless/clients/pimlico'
 import { entryPoint07Address } from "viem/account-abstraction"
 import { randomBytes } from 'crypto'
-import { MOCK_ATTESTER_ADDRESS, RHINESTONE_ATTESTER_ADDRESS } from '@rhinestone/module-sdk'
 
 export enum OperationType {
   Call, // 0
@@ -23,7 +21,6 @@ export interface MetaTransactionData {
   operation?: OperationType
 }
 
-export const STORAGE_PASSKEY_LIST_KEY = 'safe_passkey_list'
 export type SafeSmartAccountClient = SmartAccountClient<HttpTransport, Chain, ToSafeSmartAccountReturnType<'0.7'>> & Erc7579Actions<ToSafeSmartAccountReturnType<'0.7'>>
 
 const rpc_url = 'https://ethereum-sepolia-rpc.publicnode.com'
