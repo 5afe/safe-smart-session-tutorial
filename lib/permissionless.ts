@@ -1,6 +1,6 @@
 import { Chain, HttpTransport, bytesToBigInt, createPublicClient, http } from 'viem'
-import { SmartAccountClient, createSmartAccountClient } from "permissionless"
 import { sepolia } from 'viem/chains'
+import { SmartAccountClient, createSmartAccountClient } from "permissionless"
 import { Erc7579Actions, erc7579Actions } from 'permissionless/actions/erc7579'
 import { ToSafeSmartAccountReturnType, toSafeSmartAccount } from "permissionless/accounts"
 import {
@@ -44,7 +44,10 @@ export const pimlicoClient = createPimlicoClient({
 })
 
 export const getSmartAccountClient = async (signer: any, nonceKey?: bigint) => {
+  //Restore a Safe based on the nonce or generate a nonce
   const nonce = nonceKey? nonceKey : bytesToBigInt(randomBytes(4))
+
+  //Generate counterfactual Safe
   const safeAccount = await toSafeSmartAccount({
     client: publicClient,
     owners: [signer],
@@ -72,8 +75,5 @@ export const getSmartAccountClient = async (signer: any, nonceKey?: bigint) => {
       },
     },
   }).extend(erc7579Actions())
-
-
-
   return {safe: smartAccountClient as unknown as SafeSmartAccountClient, nonce}
 }
