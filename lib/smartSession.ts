@@ -26,7 +26,7 @@ import {
   zeroAddress,
 } from 'viem';
 import { SafeSmartAccountClient, pimlicoUrl, publicClient } from './permissionless';
-import { privateKeyToAccount } from 'viem/accounts';
+import { generatePrivateKey, privateKeyToAccount } from 'viem/accounts';
 import { sendUserOp } from './sendUserOp';
 import { createBundlerClient } from 'viem/account-abstraction';
 import { sepolia } from 'viem/chains';
@@ -38,6 +38,7 @@ const SESSION_CONFIG = {
   transferSelector: '0xa9059cbb' as Hex,
 };
 
+console.log(generatePrivateKey())
 const sessionAccount = privateKeyToAccount(process.env.NEXT_PUBLIC_PRIVATE_KEY as Hex);
 const sudoPolicy = getSudoPolicy()
 
