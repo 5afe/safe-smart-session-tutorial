@@ -21,23 +21,40 @@ const ActionRow: React.FC<ActionRowProps> = ({ action, index, onInputChange, onR
 
         const fetchContractABI = async () => {
             try {
-                setLoadingABI(true); // Set loading state to true
+                setLoadingABI(true);
                 const response = await fetch(`https://abidata.net/${contractAddress}?network=sepolia`);
-                const json = await response.json();
-                let abi = []
-                if (json.abi[1].name !== 'CloseStream') { // Somehow etherscan provides an ABI for EOA wallet.
-                    abi = json.abi.filter((line: { type: string; stateMutability: string }) => {
-                        return line.type === 'function' && line.stateMutability === 'nonpayable';
-                    });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
                 }
-                abi.push({ name: 'native-transfer' })
+                const json = await response.json();
+    
+                // Check if the ABI is valid before processing
+                if (!Array.isArray(json.abi) || json.abi.length === 0) {
+                    throw new Error('Invalid or empty ABI received');
+                }
+    
+                let abi = [];
+                abi = json.abi.filter((line: { type: string; stateMutability: string; name?: string }) => {
+                    return line.type === 'function' && 
+                           (line.stateMutability === 'nonpayable' || line.stateMutability === 'payable') &&
+                           line.name !== 'CloseStream';
+                });
+                // Add a default function for native transfers
+                console.log(abi)
+                console.log(toFunctionSelector(abi[abi.length-1]))
+                abi.push({ name: 'native-transfer', type: 'function', stateMutability: 'payable', inputs: [], outputs: [] });
                 setContractABI(abi);
                 setAbiError(null);
             } catch (error) {
-                setAbiError('Failed to fetch contract ABI');
-                setContractABI([{ name: 'native-transfer' }]);
+                if (error instanceof Error) {
+                    console.error('Error fetching ABI:', error);
+                    setAbiError(`Failed to fetch contract ABI: ${error.message}`);
+                } else {
+                    console.error('An unexpected error occurred:', error);
+                    setAbiError('An unexpected error occurred while fetching ABI');
+                }
             } finally {
-                setLoadingABI(false); // Set loading state to false
+                setLoadingABI(false);
             }
         };
 
@@ -68,6 +85,7 @@ const ActionRow: React.FC<ActionRowProps> = ({ action, index, onInputChange, onR
                         const selectedIndex = e.target.selectedIndex;
                         let functionSelector = '0x00000000' as Hex;
                         if (e.target.value !== 'native-transfer') {
+                            console.log(e.target.value)
                             functionSelector = contractABI ? toFunctionSelector(contractABI[selectedIndex]) : '0x';
                         }
                         onInputChange(index, 'actionTargetSelector', functionSelector);
